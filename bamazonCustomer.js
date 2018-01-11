@@ -113,45 +113,45 @@
                       // // Modify the products table so that there's a product_sales column  value is updated with each individual products total revenue from each sale 
                       // // So when a customer purchases anything from the store, the price of the product is multiplied by the quantity purchased and added to the product's product_sales column.
 
-                      // var productSales = function(numOne, numTwo) {
-                      //     var multiply = numOne * numTwo;
-                      //     // console.log(multiply);
-                      //     connection.query(
-                      //         //Update the SQL database to reflect the remaining quantity.
-                      //         "UPDATE products SET ? WHERE ?",
+                      var productSales = function(numOne, numTwo) {
+                          var multiply = numOne * numTwo;
+                          // console.log(multiply);
+                          connection.query(
+                              //Update the SQL database to reflect the remaining quantity.
+                              "UPDATE products SET ? WHERE ?",
 
-                      //         [{
-                      //                 product_sales: multiply
-                      //             },
+                              [{
+                                      product_sales: multiply
+                                  },
 
-                      //             {
-                      //                 item_id: chosenItem.item_id
-                      //             },
-                      //         ], function(error, res) {
-                      //             if (error) {
-                      //               console.log(error)
-                      //               throw err
-                      //             } else{
-                      //               console.log("Order placed successfully!");
-                      //               updateProducts();
-                      //             }
+                                  {
+                                      item_id: chosenItem.item_id
+                                  },
+                              ], function(error, res) {
+                                  if (error) {
+                                    console.log(error)
+                                    throw err
+                                  } else{
+                                    console.log("Order placed successfully!");
+                                    updateProducts();
+                                  }
                                   
-                      //            }
-                      //       )
-                      // }
+                                 }
+                            )
+                      }
 
-                      // productSales(chosenItem.price, answer.customerQuantityRequired);
+                      productSales(chosenItem.price, answer.customerQuantityRequired);
 
 
-                      // function updateProducts() {
-                      //     console.log("Updating products");
+                      function updateProducts() {
+                          console.log("Updating products");
 
-                      //     connection.query("SELECT * FROM products", function(err, res) {
-                      //             if (err) throw err;
+                          connection.query("SELECT * FROM products", function(err, res) {
+                                  if (err) throw err;
 
-                      //         })
+                              })
 
-                      //     }
+                          }
 
 
                   } else {
