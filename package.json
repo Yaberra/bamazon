@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/yeti17/bamazon#readme",
   "dependencies": {
+    "console.table": "^0.9.1",
     "inquirer": "^5.0.0",
     "mysql": "^2.15.0",
     "package": "^1.0.1"

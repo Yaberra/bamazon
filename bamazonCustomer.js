@@ -1,5 +1,6 @@
   var mysql = require("mysql");
   var inquirer = require("inquirer");
+  var table = require("console.table");
   var connection = mysql.createConnection({
 
       host: "localhost",
@@ -22,6 +23,7 @@
       // buyProduct();
   });
 
+
   // Include the ids, names, and prices of products for sale.
 
   function queryAllProducts() {
@@ -30,7 +32,7 @@
       connection.query("SELECT * FROM products", function(err, res) {
           if (err) throw err;
 
-          console.log(res);
+          console.table(res);
 
 
           // First display all of the items available for sale.  
@@ -63,9 +65,9 @@
               .then(function(answer) {
                   // get the information of the chosen item
                   var chosenItem;
-                  console.log("answer:", typeof answer.choices);
+                  // console.log("answer:", typeof answer.choices);
                   for (var i = 0; i < res.length; i++) {
-                    console.log("item_id", typeof res[i].item_id);
+                      // console.log("item_id", typeof res[i].item_id);
                       if (res[i].item_id === parseInt(answer.choices)) {
                           chosenItem = res[i];
 
@@ -73,39 +75,89 @@
                       }
                   };
 
-                  console.log(chosenItem);
+                  console.table(chosenItem);
 
-                  if (chosenItem.stock_quantity > parseInt(answer.customerQuantityRequired)) {
+                  if (chosenItem.stock_quantity >= parseInt(answer.customerQuantityRequired)) {
                       var newStockQuantity = function(numOne, numTwo) {
                           var subtract = numOne - numTwo;
+                          // console.log(subtract);
                           connection.query(
-                                  //Update the SQL database to reflect the remaining quantity.
-                                  "UPDATE products SET ? WHERE ?",
+                              //Update the SQL database to reflect the remaining quantity.
+                              "UPDATE products SET ? WHERE ?",
 
-                                  [{
-                                          stock_quantity: subtract
-                                      },
+                              [{
+                                      stock_quantity: subtract
+                                  },
 
-                                      {
-                                          item_id: chosenItem.id
-                                      },
-                                  ],
+                                  {
+                                      item_id: chosenItem.item_id
+                                  },
+                              ],
 
-                            
+
 
                               function(error, res) {
                                   if (error) throw err;
                                   console.log("Order placed successfully!");
+                                  queryAllProducts();
+
 
                               }
                           )
                       }
-                      newStockQuantity(chosenItem.stock_quantity, answer.customerQuantityRequired);
+                        newStockQuantity(chosenItem.stock_quantity, answer.customerQuantityRequired);
+
+
+                      // // Modify the products table so that there's a product_sales column  value is updated with each individual products total revenue from each sale 
+                      // // So when a customer purchases anything from the store, the price of the product is multiplied by the quantity purchased and added to the product's product_sales column.
+
+                      // var productSales = function(numOne, numTwo) {
+                      //     var multiply = numOne * numTwo;
+                      //     // console.log(multiply);
+                      //     connection.query(
+                      //         //Update the SQL database to reflect the remaining quantity.
+                      //         "UPDATE products SET ? WHERE ?",
+
+                      //         [{
+                      //                 product_sales: multiply
+                      //             },
+
+                      //             {
+                      //                 item_id: chosenItem.item_id
+                      //             },
+                      //         ],
+
+
+
+                      //         function(error, res) {
+                      //             if (error) throw err;
+                      //             console.log("Order placed successfully!");
+                      //             updateProducts();
+
+
+                      //         }
+                      //     )
+                      // }
+
+                      // productSales(chosenItem.price, answer.customerQuantityRequired);
+
+
+                      // function updateProducts() {
+                      //     console.log("Updating products");
+
+                      //     connection.query("SELECT * FROM products", function(err, res) {
+                      //             if (err) throw err;
+
+                      //         })
+
+                      //     }
 
 
                   } else {
 
                       console.log("Insufficient quantity!");
+                      queryAllProducts()
+
 
                   }
 
