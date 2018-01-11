@@ -34,7 +34,6 @@
 
           console.table(res);
 
-
           // First display all of the items available for sale.  
 
           inquirer
@@ -80,7 +79,8 @@
                   if (chosenItem.stock_quantity >= parseInt(answer.customerQuantityRequired)) {
                       var newStockQuantity = function(numOne, numTwo) {
                           var subtract = numOne - numTwo;
-                          // console.log(subtract);
+                           
+                          // console.log(subtract, multiply);
                           connection.query(
                               //Update the SQL database to reflect the remaining quantity.
                               "UPDATE products SET ? WHERE ?",
@@ -92,6 +92,8 @@
                                   {
                                       item_id: chosenItem.item_id
                                   },
+
+
                               ],
 
 
@@ -105,7 +107,7 @@
                               }
                           )
                       }
-                        newStockQuantity(chosenItem.stock_quantity, answer.customerQuantityRequired);
+                      newStockQuantity(chosenItem.stock_quantity, answer.customerQuantityRequired);
 
 
                       // // Modify the products table so that there's a product_sales column  value is updated with each individual products total revenue from each sale 
@@ -125,18 +127,17 @@
                       //             {
                       //                 item_id: chosenItem.item_id
                       //             },
-                      //         ],
-
-
-
-                      //         function(error, res) {
-                      //             if (error) throw err;
-                      //             console.log("Order placed successfully!");
-                      //             updateProducts();
-
-
-                      //         }
-                      //     )
+                      //         ], function(error, res) {
+                      //             if (error) {
+                      //               console.log(error)
+                      //               throw err
+                      //             } else{
+                      //               console.log("Order placed successfully!");
+                      //               updateProducts();
+                      //             }
+                                  
+                      //            }
+                      //       )
                       // }
 
                       // productSales(chosenItem.price, answer.customerQuantityRequired);
@@ -158,12 +159,9 @@
                       console.log("Insufficient quantity!");
                       queryAllProducts()
 
-
                   }
 
-              });
-
-
+              })
       });
 
   }
