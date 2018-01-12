@@ -24,12 +24,6 @@
 
  });
 
- // Running this application will list a set of menu options:
-
- // View Product Sales by Department
-
- //Create New Department
-
  function start() {
      inquirer
          .prompt([
@@ -45,67 +39,85 @@
              }
 
          ])
-
  }
 
- .then(function(answer) {
+//  .then(function(answer) {
 
-             // When a supervisor selects `View Product Sales by Department`, the app should display a summarized table in their terminal/bash window. Use the table below as a guide.
+//              if (answer.choices === "View Product Sales by Department") {
+//                  connection.query("", function(err, res) {
+//                      if (err) throw err;
+//                      console.table(res);
+//                      start()
 
-             // | department_id | department_name | over_head_costs | product_sales | total_profit |
-             // | ------------- | --------------- | --------------- | ------------- | ------------ |
-             // | 01            | Electronics     | 10000           | 20000         | 10000        |
-             // | 02            | Clothing        | 60000           | 100000        | 40000        |
+//                  })
+//              } else if (answer.choices === "Create New Department") {
+//              	addDepartment();
+                 
+//              }
 
+//              function addDepartment() {
 
-
-             if (answer.choices === "View Products for Sale") {
-
-                 connection.query("SELECT departments.department_id, departments.department_name, departments.over_head_costs FROM departments INNER JOIN products ON departments.product_sales = products. product_sales", function(err, res) {
-                     if (err) throw err;
-                     console.table(res);
-                     start();
-
-                 })
-
-
-                 // The `total_profit` column should be calculated on the fly using the difference between `over_head_costs` and `product_sales`. `total_profit` should not be stored in any database. You should use a custom alias.
-
-                 connection.query("SELECT products.product_sales - department. over_head_costs AS [total_profit] WHERE departments.product_sales = product.product_sales", function(err, result) {
-                     if (err) throw err;
-                     console.table(res);
-                     start();
-
-                 })
-
-             } else(answer.choices === "Create New Department") {
-
-                 function newDepartment() {
-                     console.log("Add New Product...\n");
-                     var query = connection.query(
-                         "INSERT INTO products SET ?", {
-
-                             department_id: ""
-
-                             department_name: ""
-
-                             over_ head_cost: ""
+//                  inquirer
+//                      .prompt([
 
 
-                         },
+//                          {
+//                              name: "department_name",
+//                              type: "input",
+//                              message: "What is the department name?"
+//                          },
 
-                         function(err, res) {
-                             console.log(res.affectedRows + " department inserted!\n");
-                             // Call updateDepartment AFTER the INSERT completes
-                             updateDepartment();
-                         }
-                     );
+//                          {
+//                              name: "over_head_costs",
+//                              type: "input",
+//                              message: "What are the over head costs?"
 
-                 }
+//                          },
 
-                 start();
-             }
+//                          {
+//                              name: "",
+//                              type: "input",
+//                              message: "What is the?"
+
+//                          },
+
+
+//                      ]).then(function(result, err) {
+//                              if (err) {
+//                                  console.log(err);
+//                              }
+
+//                              console.log(result)
+//                              console.log("Adding Department...\n");
+//                              var query = connection.query(
+//                                  "INSERT INTO products SET ?",
+//                                  result,
 
 
 
-             c
+
+//                                  function(err, res) {
+//                                      console.log(res.affectedRows + " product inserted!\n");
+//                                      // Call updateProduct AFTER the INSERT completes
+//                                      start();
+//                                  }
+//                              );
+
+//                          }
+
+//                      )
+
+
+
+//              };
+
+
+// function totalProfit() {
+// 	 connection.query("SELECT products.product_sales - department. over_head_costs AS [total_profit] WHERE departments.product_sales = product.product_sales", function(err, result) {
+//      if (err) throw err;
+//      console.table(res);
+//       start();
+
+//      })
+// }
+

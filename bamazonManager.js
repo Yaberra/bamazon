@@ -62,7 +62,7 @@
                      updateProducts();
 
 
-                 } else if (answer.choice === "Add New Product") {
+                 } else if (answer.choices === "Add New Product") {
                      addProducts();
 
 
@@ -126,7 +126,7 @@
                  console.table(chosenItem);
 
                  var newStockQuantity = function(numOne, numTwo) {
-                     var sum = numOne + numTwo;
+                     var sum = parseInt(numOne) + parseInt(numTwo);
                      // console.log(subtract);
                      connection.query(
                          //Update the SQL database to reflect the additional quantity.
@@ -163,29 +163,65 @@
  // selects `Add New Product`, it should allow the manager to add a completely new product to the store  
 
  function addProducts() {
-     console.log("Add New Product...\n");
-     var query = connection.query(
-         "INSERT INTO products SET ?", {
-             
-             	item_id: ""
 
-                 product_name: ""
+ 	inquirer
+              .prompt([
 
-                 department_name: ""
+                  
+                  {
+                      name: "product_name",
+                      type: "input",
+                      message: "What is the product name?"
+                  },
 
-                 price: ""
+                  {
+                      name: "department_name",
+                      type: "input",
+                      message: "What is the department name?"
 
-                 stock_quantity: ""
-                      },
+                  },
+
+                  {
+                      name: "price",
+                      type: "input",
+                      message: "What is the price?"
+
+                  },
+
+                   {
+                      name: "stock_quantity",
+                      type: "input",
+                      message: "What is the stock quantity you want to add?"
+
+                  }
+
+
+
+              ]).then(function(result, err) {
+              	  if (err){
+              	  	console.log(err);
+              	  }
+              	  	
+              	  console.log(result)
+              	console.log("Adding New Product...\n");
+              	var query = connection.query(
+         		"INSERT INTO products SET ?", 
+         		result,
+         		
+          
+ 
+         
          function(err, res) {
              console.log(res.affectedRows + " product inserted!\n");
              // Call updateProduct AFTER the INSERT completes
-             updateProducts();
+            start();
          }
      );
 
+              }
 
-     
+              )
 
-
- };
+        
+        
+};

@@ -133,7 +133,7 @@
                                     throw err
                                   } else{
                                     console.log("Order placed successfully!");
-                                    updateProducts();
+                                  updateProducts();
                                   }
                                   
                                  }
